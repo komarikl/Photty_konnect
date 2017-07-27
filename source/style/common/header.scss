@@ -10,14 +10,17 @@
     display: inline-block;
     flex: 1;
     font-family: "Ralington";
-    font-size: 40px;
+    font-size: 3em;
     color: $aqua;
   }
   &__nav-list{
     display: flex;
     flex-wrap: wrap;
     .nav-list__item{
-      padding-left: 30px;
+      padding-left: 3em;
     }
+  }
+  @include phones{
+    padding: 0 5%;
   }
 }

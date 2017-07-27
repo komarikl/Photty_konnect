@@ -24,9 +24,15 @@ block content
         button.download-button
           i(aria-hidden='true').fa.fa-arrow-down
           span.download-button__text  Загрузить бесплатно
+        -
+          var items=[{href:'https://www.facebook.com/', name: 'facebook'},
+          {href:'https://www.twitter.com/', name: 'twitter'},
+          {href:'#', name:'globe'},
+          {href:'https://www.github.com/', name: 'github'}]
+
         ul.socials
-          each val in ['facebook', 'twitter', 'globe', 'github']
-            li.social: i(class='fa fa-' + val)
+          each item in items
+            li.social: a.social__link(href=item.href): i(class='fa fa-' + item.name)
         //- var n = 0;
         //ul.bullets
         //  while n < 4

@@ -71,7 +71,7 @@
     }
     &__title{
       font-family: 'Panton-Bold', Arial, sans-serif;
-      font-size: 40px;
+      font-size: 3em;
       padding-bottom: 1em;
     }
     &__desc{
@@ -87,8 +87,7 @@
     }
     .download-button{
       display: inline-block;
-      width: 362px;
-      height: 67px;
+      width: 70%;
       border-radius: 5px;
       border: none;
       background-color: $orange;
@@ -96,14 +95,15 @@
       font-size: 30px;
       color: #fff;
       margin-bottom: 1em;
+      padding: 0.5em 0;
     }
     .socials{
       .social{
         position: relative;
         display: inline-block;
         opacity: 0.5;
-        font-size: 25px;
-        padding-right: 15px;
+        font-size: 1.9em;
+        padding-right: 0.6em;
       }
     }
   }
@@ -113,17 +113,17 @@
     flex-direction: column;
     justify-content: space-around;
     position: absolute;
-    top: calc(50% - 80px);
+    top: calc(50% - 12.5vmin);
     right: -50px;
-    height: 160px;
+    height: 25vmin;
 
     .bullet{
       font: 0/0 sans-serif;
       &:before{
         content: '';
         display: inline-block;
-        width: 8px;
-        height: 8px;
+        width: 1vmin;
+        height: 1vmin;
         border-radius: 50%;
         background-color: $dot;
       }

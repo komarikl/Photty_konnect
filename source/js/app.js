@@ -1,30 +1,26 @@
 import Unsplash, { toJson } from 'unsplash-js';
 
 const unsplash = new Unsplash({
-								  applicationId:
-									  'f3a562a5af73aeba7b26055ab87f226b06b83a8d47cd93c63ea5dea131b09ec8',
-								  secret: '6b687268c997f100ac1a0b74333f86185f271e53c0272fba78737d68c8e438fd',
-								  callbackUrl: 'urn:ietf:wg:oauth:2.0:oob'
-							  });
+	applicationId: 'f3a562a5af73aeba7b26055ab87f226b06b83a8d47cd93c63ea5dea131b09ec8',
+	secret: '6b687268c997f100ac1a0b74333f86185f271e53c0272fba78737d68c8e438fd',
+	callbackUrl: 'urn:ietf:wg:oauth:2.0:oob'
+});
 
-function debounce(func, wait, immediate) {
-	var timeout;
-	return function() {
-		var context = this,
-			args = arguments;
-		var later = function() {
-			timeout = null;
-			if (!immediate) func.apply(context, args);
-		};
-		var callNow = immediate && !timeout;
-		clearTimeout(timeout);
-		timeout = setTimeout(later, wait);
-		if (callNow) func.apply(context, args);
-	};
+function debounce(f, ms){
+	let state = null;
+	const FROZEN = 1;
+
+	return function(){
+		if(state) return;
+
+		f.apply(this, arguments);
+		state = FROZEN;
+		setTimeout(function(){state = null}, ms);
+	}
 }
 
 $(document).ready(function() {
-	var hand = $('.hand-left'),
+	const hand = $('.hand-left'),
 		finger = $('.finger'),
 		slider = $('.slider'),
 		handRight = $('.hand-right'),
@@ -37,14 +33,14 @@ $(document).ready(function() {
 
 	setPositionAll();
 
-	$(window).resize(setPositionAll);
-	document.addEventListener('wheel', debounce(onScroll, 200));
+	window.addEventListener('resize', setPositionAll);
+	document.addEventListener('wheel', debounce(onScroll, 2000));
+	document.addEventListener('touchmove', debounce(onScroll, 2000));
 
 	function setPositionAll() {
 		setPosition(finger, FINGER_RATIO_X, FINGER_RATIO_Y);
 		setPosition(slider, SLIDER_RATIO_X, SLIDER_RATIO_Y);
 		setPosition(handRight, HAND_RIGHT_RATIO_X, HAND_RIGHT_RATIO_Y);
-		// shiftSecondPicture();
 	}
 
 	function onScroll() {
@@ -55,28 +51,16 @@ $(document).ready(function() {
 
 	function setPosition(elem, ratioX, ratioY) {
 		elem.css({
-					 top: hand.height() / ratioY + 'px',
-					 right: hand.width() / ratioX + 'px',
-					 opacity: elem == handRight ? 0 : 1
-				 });
-	}
-
-	function shiftSecondPicture(pic) {
-		if (!pic) {
-			pic = slider.children().not('.slider-pic--active');
-		}
-
-		pic[0].onload = function() {
-			pic.css({
-						right: '-' + secondPicture.width() + 'px'
-					});
-		};
+			top: hand.height() / ratioY + 'px',
+			right: hand.width() / ratioX + 'px',
+			opacity: elem == handRight ? 0 : 1
+		});
 	}
 
 	function slideNextPicture() {
-		let source = 'https://source.unsplash.com/',
+		let picId;
+		const source = 'https://source.unsplash.com/',
 			size = '/270x480',
-			picId,
 			firstPicture = slider.children(':first-child'),
 			secondPicture = slider.children(':last-child');
 
@@ -91,10 +75,10 @@ $(document).ready(function() {
 			unsplash.photos.getRandomPhoto().then(toJson).then(json => {
 				picId = json.id;
 			pic1.attr('src', source + picId + size);
+              console.log(source + picId + size);
 		});
 			pic1.removeClass('slider-pic--active');
 			pic2.addClass('slider-pic--active');
-			//shiftSecondPicture(pic1);
 		}
 	}
 
@@ -113,7 +97,7 @@ $(document).ready(function() {
 	}
 
 	function setNextBullet() {
-		let bul = $('.bullet--active');
+		const bul = $('.bullet--active');
 		if (bul.next().length > 0) {
 			return addClassToBullet(bul.next());
 		}
