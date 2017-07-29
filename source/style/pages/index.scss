@@ -29,6 +29,7 @@
     }
     .hand-left{
       height: 125%;
+      filter: drop-shadow(1em 2em 3em #666);
     }
     .hand-right{
       opacity: 0;
@@ -92,7 +93,7 @@
       border: none;
       background-color: $orange;
       font-family: 'Panton-Bold', Arial, sans-serif;
-      font-size: 30px;
+      font-size: 2em;
       color: #fff;
       margin-bottom: 1em;
       padding: 0.5em 0;
